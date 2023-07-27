@@ -1,0 +1,131 @@
+
+// Formlar arası uygulama
+
+
+public Form1()
+        {
+            InitializeComponent();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+            //Form1 açılırken frmDetay formunu açmak için yazdık...
+            //frmDetay frm = new frmDetay();
+            //frm.Show();
+        }
+
+        frmDetay frm = null;
+        private void btnDetay_Click(object sender, EventArgs e)
+        {
+            //if (frm == null)
+            //    frm = new frmDetay();
+            //frm.MdiParent = this;
+            //frm.Show();
+            //frm.Text = textBox1.Text;
+
+            //1.Yonetm:
+            //Modifiers => public...
+            //frm.textBox1.Text = textBox1.Text;
+
+            //2.Yontem
+            //Metod kullanımı...
+            //frm.SetDegistir(textBox1.Text);
+
+
+            //3.Yontem
+            //Property kullanımı...
+            //frm.Mesaj = textBox1.Text;
+
+
+            //4.ctor Yontemi...
+
+            //frmDetay frm = new frmDetay(textBox1.Text);
+
+
+            //Detay formundan herhangi bir veriyi ana forma aktarmak için...
+            frmDetay frm = new frmDetay(this, textBox1.Text);
+
+            frm.Show();
+
+
+        }
+
+        public void TarihAktar(string str)
+        {
+            textBox1.Text = str;
+
+
+        }
+    }
+
+//-----------------------------------------------------------------------------------------
+
+public partial class frmDetay : Form
+    {
+        public frmDetay()
+        {
+            InitializeComponent();
+        }
+
+        public frmDetay(string mesaj)
+        {
+            InitializeComponent();
+            textBox1.Text = mesaj;
+        }
+
+        Form1 _frm1;
+
+        public frmDetay(Form1 frm, string mesaj)
+        {
+            InitializeComponent();
+            textBox1.Text = mesaj;
+            _frm1 = frm;
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            //frmDetayDetay frm = new frmDetayDetay();
+            //frm.MdiParent= this;
+            //frm.ShowDialog();
+        }
+
+        private void frmDetay_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        public void SetDegistir(string mesaj)
+        {
+            textBox1.Text = mesaj;
+        }
+
+        private void monthCalendar1_DateChanged(object sender, DateRangeEventArgs e)
+        {
+            _frm1.TarihAktar(e.Start.ToLongDateString());
+            this.Close();
+        }
+
+
+        //Diğer aylardaki tarih verilerini de gormek istersek yada secim yaptırmak istersek kullanıyoruz...
+        private void monthCalendar2_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            MessageBox.Show(e.Start.ToLongDateString());
+        }
+
+        private void monthCalendar1_DateSelected(object sender, DateRangeEventArgs e)
+        {
+            _frm1.TarihAktar(e.Start.ToLongDateString());
+            this.Close();
+        }
+
+        public string Mesaj
+        {
+            get { return textBox1.Text; }
+            set { textBox1.Text = value; }
+        }
+    }
+
+//-----------------------------------------------------------------------------------------
+
+
+
